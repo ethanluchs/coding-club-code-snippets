@@ -35,3 +35,5 @@ yarn-error.log*
 # agent scratch
 CLAUDE.md
 AGENTS.md
+
+.vercel
