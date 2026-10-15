@@ -6,14 +6,16 @@ import CodeSurface from "./CodeSurface";
 
 type Item = Snippet & { html: string };
 
-const WEEKS = [1, 2, 3, 4, 5, 6];
+const WEEKS = [1, 2, 3, 4, 5, 6, 7];
 
 export default function SnippetList({
   items,
   weekColors,
+  weekLabels,
 }: {
   items: Item[];
   weekColors: Record<number, string>;
+  weekLabels: Record<number, string>;
 }) {
   const [week, setWeek] = useState<number>(1);
   const shown = items.filter((s) => s.week === week);
@@ -37,9 +39,11 @@ export default function SnippetList({
                   color: active ? "#fff" : c,
                   boxShadow: `inset 0 0 0 3px ${c}`,
                 }}
-                className="h-12 flex-1 rounded-xl text-lg font-extrabold transition-transform active:scale-95"
+                className={`h-12 rounded-xl font-extrabold transition-transform active:scale-95 ${
+                  n === 7 ? "flex-[1.6] text-base" : "flex-1 text-lg"
+                }`}
               >
-                {n}
+                {weekLabels[n]}
               </button>
             );
           })}

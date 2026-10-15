@@ -3,7 +3,7 @@
  *
  *  1. Every pin number appearing in a sketch must be one we actually use.
  *  2. No two components may share a pin within one sketch.
- *  3. Snippet ids must be unique and weeks must be 1-6.
+ *  3. Snippet ids must be unique and weeks must be 1-7 (7 = bonus).
  *
  * Run: npm run check-pins  (also runs as part of npm run build)
  */
@@ -44,7 +44,7 @@ for (const file of ["snippets.ts"]) {
   // weeks in range
   for (const m of src.matchAll(/^\s*week:\s*(\d+)/gm)) {
     const w = Number(m[1]);
-    if (w < 1 || w > 6) fail.push(`${file}: week ${w} out of range 1-6`);
+    if (w < 1 || w > 7) fail.push(`${file}: week ${w} out of range 1-7`);
   }
 
   // A bare number inside pinMode/digitalWrite/analogWrite/attach/pulseIn
@@ -58,10 +58,13 @@ for (const file of ["snippets.ts"]) {
     );
   }
 
-  // const int <name> = <n>;  -> must be an allowed pin, and unique per file
+  // const int <name> = <n>;  -> must be an allowed pin, and unique per file.
+  // Only names that actually denote pins: *Pin, ena/enb, in1..in4.
+  const PIN_NAME = /^(.*Pin|ena|enb|in[1-4])$/;
   const declared = new Map();
   for (const m of src.matchAll(/const int (\w+)\s*=\s*(\d+)\s*;/g)) {
     const [, name, numStr] = m;
+    if (!PIN_NAME.test(name)) continue; // tuning constant, not a pin
     const num = Number(numStr);
     if (!allowed.has(num)) {
       fail.push(
