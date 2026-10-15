@@ -13,8 +13,9 @@ npm run dev
 
 ## Editing the code snippets
 
-All twelve snippets live in [`content/snippets.ts`](content/snippets.ts).
-Each one is a title, an optional pin list, and the code.
+All thirteen snippets live in [`content/snippets.ts`](content/snippets.ts).
+Each one is a title, an optional pin list, and the code. Weeks 1-6 are the
+course; week 7 is the bonus course challenge, shown as a "Bonus" tab.
 
 **Pin numbers are never hardcoded.** They come from
 [`content/pins.ts`](content/pins.ts) and are interpolated into the sketches, so

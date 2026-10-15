@@ -1,6 +1,7 @@
 # Snippet Inventory
 
-Every code snippet extracted from `YMCA 6 weeks.pdf`, in curriculum order.
+Every code snippet extracted from `YMCA 6 weeks.pdf`, in curriculum order,
+plus one bonus challenge written separately (see Bonus at the end).
 Source page numbers refer to the PDF. This is the source of truth for
 `content/snippets/*.ts` — transcribe from here, not from the PDF.
 
@@ -483,6 +484,31 @@ it would be a second `unscramble` challenge using the same component as 5.1.
 
 All other code-bearing pages (12, 16, 20, 21, 23, 28, 29, 34, 35, 36, 39, 40,
 46, 47, 48, 57, 58, 60, 61, 62, 70, 71, 72) are covered above.
+
+---
+
+## Bonus — Course Challenge
+
+### B.1 Course Challenge
+- id: `course-challenge`
+- week: 7 (shown on the site as a "Bonus" tab, not a real week)
+- source: **not from the deck** — written separately, added 2026-10-15
+- status: VERBATIM (pins interpolated from `pins.ts`)
+- wiring: identical to 6.2 — servo 4, Trig 3, Echo 2, ENA 11, IN1 10,
+  IN2 9, IN3 7, IN4 6, ENB 5. Nothing to rewire after Week 6.
+- blurb: Kids edit only `runCourse()`, calling `go_forward(60)`,
+  `turn_right(90)`, `go_until_wall()` and so on, rather than driving motor
+  pins directly. Everything below a "DO NOT CHANGE" banner implements those
+  commands.
+- note: Two constants are meant to be set by the instructor after measuring
+  a real car: `MS_PER_CM` (default 25) and `MS_PER_DEGREE` (default 6).
+  `leftSpeed` / `rightSpeed` (default 180) are for kids to tune if their car
+  pulls to one side.
+- note: The course runs once from `setup()` after a 5-second placement delay;
+  `loop()` is deliberately empty. Re-run with the Arduino RESET button.
+- note: `go_until_wall()` has an 8-second safety timeout, and `readDistance()`
+  returns 400 when `pulseIn` times out, so a missing echo reads as "far away"
+  rather than "wall right here".
 
 ---
 
