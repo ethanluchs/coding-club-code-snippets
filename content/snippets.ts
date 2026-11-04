@@ -23,6 +23,12 @@ export const weekColors: Record<number, string> = {
 /** Weeks 8-10 have no code yet. */
 export const comingSoon: number[] = [8, 9, 10];
 
+/** Weeks already taught. Still readable, just dimmed and ticked. */
+export const done: number[] = [1, 2, 3, 4, 5, 6];
+
+/** The week the tabs open on. */
+export const currentWeek = 7;
+
 export const snippets: Snippet[] = [
   // ---------- Week 1 ----------
   {

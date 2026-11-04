@@ -26,6 +26,21 @@ the code a kid copies and the pins shown next to it can never disagree.
 fails the build if a snippet hardcodes a pin, reuses a pin within one sketch,
 or references a pin that isn't in the map.
 
+## Wiring diagrams
+
+The site has a **Wiring** tab with four diagrams: motors to driver, driver to
+Arduino, power, and the distance sensor. Each shows the picture alongside a
+connection table with a colour swatch per wire, and the picture enlarges on
+click (the source images are small and hard to read inline).
+
+Images live in `public/wiring/`; the tables are in
+[`content/wiring.ts`](content/wiring.ts) and pull their pin numbers from
+`pins.ts` like the sketches do. To swap a diagram, overwrite the PNG with the
+same filename and update `width`/`height` if the size changed.
+
+**Left and right are deliberately never named.** Some drivers get mounted
+upside down, so the tables say "IN1/IN2 side" and tell kids to test and swap.
+
 ## Wiring
 
 One pin map covers all six weeks, matching the wiring diagrams in the

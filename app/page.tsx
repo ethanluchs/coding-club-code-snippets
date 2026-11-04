@@ -1,4 +1,11 @@
-import { snippets, weekColors, comingSoon } from "@/content/snippets";
+import {
+  snippets,
+  weekColors,
+  comingSoon,
+  done,
+  currentWeek,
+} from "@/content/snippets";
+import { diagrams } from "@/content/wiring";
 import { highlightCpp } from "@/lib/highlight";
 import SnippetList from "@/components/SnippetList";
 
@@ -28,6 +35,9 @@ export default async function Home() {
         items={items}
         weekColors={weekColors}
         comingSoon={comingSoon}
+        done={done}
+        currentWeek={currentWeek}
+        diagrams={diagrams}
       />
     </>
   );
