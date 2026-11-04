@@ -3,7 +3,7 @@
  *
  *  1. Every pin number appearing in a sketch must be one we actually use.
  *  2. No two components may share a pin within one sketch.
- *  3. Snippet ids must be unique and weeks must be 1-7 (7 = bonus).
+ *  3. Snippet ids must be unique and weeks must be 1-10.
  *
  * Run: npm run check-pins  (also runs as part of npm run build)
  */
@@ -44,7 +44,7 @@ for (const file of ["snippets.ts"]) {
   // weeks in range
   for (const m of src.matchAll(/^\s*week:\s*(\d+)/gm)) {
     const w = Number(m[1]);
-    if (w < 1 || w > 7) fail.push(`${file}: week ${w} out of range 1-7`);
+    if (w < 1 || w > 10) fail.push(`${file}: week ${w} out of range 1-10`);
   }
 
   // A bare number inside pinMode/digitalWrite/analogWrite/attach/pulseIn

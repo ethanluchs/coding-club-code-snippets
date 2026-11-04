@@ -487,28 +487,42 @@ All other code-bearing pages (12, 16, 20, 21, 23, 28, 29, 34, 35, 36, 39, 40,
 
 ---
 
-## Bonus — Course Challenge
+## Week 7 — Make It Move
 
-### B.1 Course Challenge
+### 7.1 Make It Move
 - id: `course-challenge`
-- week: 7 (shown on the site as a "Bonus" tab, not a real week)
-- source: **not from the deck** — written separately, added 2026-10-15
+- week: 7 (first week of the 4-week programming course)
+- source: `YMCA programming 4 weeks.pdf` (the programming course deck)
 - status: VERBATIM (pins interpolated from `pins.ts`)
 - wiring: identical to 6.2 — servo 4, Trig 3, Echo 2, ENA 11, IN1 10,
   IN2 9, IN3 7, IN4 6, ENB 5. Nothing to rewire after Week 6.
-- blurb: Kids edit only `runCourse()`, calling `go_forward(60)`,
-  `turn_right(90)`, `go_until_wall()` and so on, rather than driving motor
-  pins directly. Everything below a "DO NOT CHANGE" banner implements those
-  commands.
-- note: Two constants are meant to be set by the instructor after measuring
-  a real car: `MS_PER_CM` (default 25) and `MS_PER_DEGREE` (default 6).
-  `leftSpeed` / `rightSpeed` (default 180) are for kids to tune if their car
-  pulls to one side.
+- blurb: Kids edit only `runCourse()`, calling `go_forward(50)`,
+  `turn_left(90)` and `turn_right(90)` rather than driving motor pins
+  directly. Everything below a "DO NOT CHANGE" banner implements those
+  commands. This is the abstraction the programming deck is built around
+  (deck p.6: "all of this BECAME this").
+- note: Three commands only — no `go_backward`, `go_until_wall` or `wait`.
+  Those belong to later weeks.
+- note: `runCourse()` ships **empty** — just a `// your code goes here`
+  comment. Kids write the path themselves (deck p.9 one metre, p.10 square).
+- note: `MS_PER_CM` (25) and `MS_PER_DEGREE` (6) sit in an editable
+  "YOUR CAR'S NUMBERS" section near the top, each with a comment saying which
+  way to move it. Kids find them via the ONE METER and SQUARE challenges
+  (deck p.9, p.10). `leftSpeed` / `rightSpeed` (180) fix a car that pulls.
 - note: The course runs once from `setup()` after a 5-second placement delay;
   `loop()` is deliberately empty. Re-run with the Arduino RESET button.
-- note: `go_until_wall()` has an 8-second safety timeout, and `readDistance()`
-  returns 400 when `pulseIn` times out, so a missing echo reads as "far away"
-  rather than "wall right here".
+- note: Trig and Echo are declared and set up but unused — this week's three
+  commands do not read the sensor. The servo still centres at 90 degrees so
+  the sensor points forward for later weeks.
+
+---
+
+## Weeks 8-10 — not yet written
+
+Weeks 8, 9 and 10 ("Make your own", "Make it decide", "The maze" in the
+programming deck) have no snippet yet. They are listed in `comingSoon` in
+`content/snippets.ts`, which makes the site render a "Coming soon" panel for
+those tabs. Remove a week from that array once its snippet exists.
 
 ---
 
