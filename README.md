@@ -13,7 +13,7 @@ npm run dev
 
 ## Editing the code snippets
 
-All thirteen snippets live in [`content/snippets.ts`](content/snippets.ts).
+All fourteen snippets live in [`content/snippets.ts`](content/snippets.ts).
 Each one is a title, an optional pin list, and the code. Weeks 1-6 are the
 electronics course; weeks 7-10 are the programming course. Weeks listed in
 `comingSoon` render a "Coming soon" panel instead of code.

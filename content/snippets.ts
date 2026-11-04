@@ -365,6 +365,140 @@ void loop() {
 
   // ---------- Week 7 ----------
   {
+    id: "test-everything",
+    title: "Test the Wheels",
+    week: 7,
+    pins: `ENA ${M.ena} · IN1 ${M.in1} · IN2 ${M.in2} · IN3 ${M.in3} · IN4 ${M.in4} · ENB ${M.enb}`,
+    code: `/* ============================================================
+   THE ROBOT CAR  —  TEST THE WHEELS
+
+   Run this FIRST, before any of your own code.
+
+   PUT THE CAR ON BLOCKS so the wheels spin in the air.
+   A book under each end works.
+
+   Open the Serial Monitor (Tools > Serial Monitor, set to 9600)
+   and watch the words while you watch the wheels.
+
+   It does four things, then stops:
+
+     1. Both wheels FORWARD
+     2. Both wheels BACKWARD
+     3. Spin LEFT      (wheels turn opposite ways)
+     4. Spin RIGHT     (the other way around)
+
+   If a step does not match the words, that is your problem.
+   Press RESET to run it again.
+
+   ============================================================ */
+
+const int ena = ${M.ena};   // one side, speed
+const int in1 = ${M.in1};   // one side
+const int in2 = ${M.in2};   // one side
+const int in3 = ${M.in3};   // other side
+const int in4 = ${M.in4};   // other side
+const int enb = ${M.enb};   // other side, speed
+
+const int SPEED = 180;     // 0 to 255
+const int STEP  = 1500;    // how long each test runs, in ms
+
+
+void setup() {
+  pinMode(ena, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  pinMode(enb, OUTPUT);
+
+  Serial.begin(9600);
+
+  stopCar();
+
+  Serial.println("WHEELS OFF THE GROUND?");
+  Serial.println("Starting in 3 seconds...");
+  delay(3000);
+
+  Serial.println("1. FORWARD  - both wheels the same way");
+  bothForward();
+  delay(STEP);
+  stopCar();
+  delay(600);
+
+  Serial.println("2. BACKWARD - both wheels the other way");
+  bothBackward();
+  delay(STEP);
+  stopCar();
+  delay(600);
+
+  Serial.println("3. SPIN LEFT  - wheels opposite ways");
+  spinLeft();
+  delay(STEP);
+  stopCar();
+  delay(600);
+
+  Serial.println("4. SPIN RIGHT - wheels opposite ways");
+  spinRight();
+  delay(STEP);
+  stopCar();
+
+  Serial.println("DONE. Press RESET to test again.");
+}
+
+
+void loop() {
+  // nothing here - the test runs one time, in setup()
+}
+
+
+// ---------- the four movements ----------
+
+void bothForward() {
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(ena, SPEED);
+  analogWrite(enb, SPEED);
+}
+
+void bothBackward() {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(ena, SPEED);
+  analogWrite(enb, SPEED);
+}
+
+void spinLeft() {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(ena, SPEED);
+  analogWrite(enb, SPEED);
+}
+
+void spinRight() {
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(ena, SPEED);
+  analogWrite(enb, SPEED);
+}
+
+void stopCar() {
+  analogWrite(ena, 0);
+  analogWrite(enb, 0);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}`,
+  },
+  {
     id: "course-challenge",
     title: "Make It Move",
     week: 7,

@@ -489,7 +489,26 @@ All other code-bearing pages (12, 16, 20, 21, 23, 28, 29, 34, 35, 36, 39, 40,
 
 ## Week 7 — Make It Move
 
-### 7.1 Make It Move
+### 7.1 Test the Wheels
+- id: `test-everything`
+- week: 7
+- source: **not from a deck** — written to match the CAR ON BLOCKS slide
+  (programming deck p.4), added 2026-11-03
+- status: VERBATIM (pins interpolated from `pins.ts`)
+- wiring: motors only — ENA 11, IN1 10, IN2 9, IN3 7, IN4 6, ENB 5.
+  No servo, no sensor.
+- blurb: Upload before anything else, with the car on blocks. Runs four
+  movements with a 3-second head start, narrating each one to the Serial
+  Monitor so a kid can match what they read to what they see: forward,
+  backward, spin left, spin right. Then stops.
+- note: Deliberately motors-only. The deck's p.4 checklist also lists a servo
+  sweep, but this is the wheels test and the servo is not wired yet in the
+  programming course.
+- note: `SPEED` (180) and `STEP` (1500 ms) are at the top if a car needs
+  slower or longer runs.
+- note: Runs once from `setup()`; `loop()` is empty. RESET re-runs it.
+
+### 7.2 Make It Move
 - id: `course-challenge`
 - week: 7 (first week of the 4-week programming course)
 - source: `YMCA programming 4 weeks.pdf` (the programming course deck)
