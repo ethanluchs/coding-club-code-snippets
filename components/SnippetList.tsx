@@ -203,13 +203,8 @@ function Pulaski({
 }) {
   return (
     <>
-      <p className="mt-3 mb-5 text-[15px] text-muted">
-        One-off session. No distance sensor and no servo on these cars — just
-        the motors.
-      </p>
-
       <h2
-        className="mb-1 text-2xl font-extrabold tracking-tight"
+        className="mt-4 mb-1 text-2xl font-extrabold tracking-tight"
         style={{ color }}
       >
         Wiring
