@@ -125,3 +125,82 @@ export const diagrams: WiringDiagram[] = [
     note: "Pin order on the sensor is Vcc, Trig, Echo, Gnd.",
   },
 ];
+
+/**
+ * Pulaski — a one-off 3-hour session. Same car, but no servo and no
+ * distance sensor, so there are only three diagrams and the 5V goes
+ * straight from the driver to the Arduino with no breadboard.
+ */
+export const pulaskiDiagrams: WiringDiagram[] = [
+  {
+    id: "p-motors",
+    n: 1,
+    title: "Motors to driver",
+    img: "/pulaski/motors.png",
+    width: 1092,
+    height: 682,
+    groups: [
+      {
+        heading: "Both motors on one side",
+        rows: [
+          { swatch: BLACK, from: "black", to: "OUT4" },
+          { swatch: RED, from: "red", to: "OUT3" },
+        ],
+      },
+      {
+        heading: "Both motors on the other side",
+        rows: [
+          { swatch: BLACK, from: "black", to: "OUT1" },
+          { swatch: RED, from: "red", to: "OUT2" },
+        ],
+      },
+    ],
+    note: "Two motors share each screw terminal. Same colour goes to the same screw — both blacks together, both reds together.",
+  },
+  {
+    id: "p-driver",
+    n: 2,
+    title: "Driver to Arduino",
+    img: "/pulaski/driver.png",
+    width: 718,
+    height: 457,
+    groups: [
+      {
+        rows: [
+          { swatch: "#f07000", from: "ENA", to: `pin ${M.ena}` },
+          { swatch: "#e838c0", from: "IN1", to: `pin ${M.in1}` },
+          { swatch: "#17a81a", from: "IN2", to: `pin ${M.in2}` },
+          { swatch: "#e8e020", from: "IN3", to: `pin ${M.in3}` },
+          { swatch: RED, from: "IN4", to: `pin ${M.in4}` },
+          { swatch: "#2b6fd8", from: "ENB", to: `pin ${M.enb}` },
+        ],
+      },
+    ],
+    note: "IN1 and IN2 drive one side, IN3 and IN4 the other. Which side is which depends on how your driver is mounted — test it and swap if the car turns the wrong way.",
+  },
+  {
+    id: "p-power",
+    n: 3,
+    title: "Power",
+    img: "/pulaski/power.png",
+    width: 1160,
+    height: 482,
+    groups: [
+      {
+        heading: "Battery pack",
+        rows: [
+          { swatch: RED, from: "battery +", to: "driver 12V" },
+          { swatch: BLACK, from: "battery −", to: "driver GND" },
+        ],
+      },
+      {
+        heading: "Driver to Arduino",
+        rows: [
+          { swatch: BLACK, from: "driver GND", to: "Arduino GND" },
+          { swatch: "#e8e020", from: "driver 5V", to: "Arduino 5V" },
+        ],
+      },
+    ],
+    note: "The driver makes the 5V and feeds the Arduino directly.",
+  },
+];

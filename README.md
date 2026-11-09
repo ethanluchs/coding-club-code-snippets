@@ -26,6 +26,17 @@ the code a kid copies and the pins shown next to it can never disagree.
 fails the build if a snippet hardcodes a pin, reuses a pin within one sketch,
 or references a pin that isn't in the map.
 
+## Pulaski
+
+A one-off 3-hour session, on its own **Pulaski** tab. Those cars have no
+distance sensor and no servo, so the tab carries just the two week-7 sketches
+(the same `items`, selected by id in `app/page.tsx`) and three wiring diagrams
+of its own in `public/pulaski/`.
+
+The pin map is identical to the regular car, so the week-7 code runs unchanged.
+The session deck tells kids to "copy the second block of code", so the tab
+labels its code blocks **Block 1** and **Block 2**.
+
 ## Wiring diagrams
 
 The site has a **Wiring** tab with four diagrams: motors to driver, driver to

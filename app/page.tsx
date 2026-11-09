@@ -5,7 +5,7 @@ import {
   done,
   currentWeek,
 } from "@/content/snippets";
-import { diagrams } from "@/content/wiring";
+import { diagrams, pulaskiDiagrams } from "@/content/wiring";
 import { highlightCpp } from "@/lib/highlight";
 import SnippetList from "@/components/SnippetList";
 
@@ -18,6 +18,11 @@ export default async function Home() {
       html: await highlightCpp(s.code),
     })),
   );
+
+  // Pulaski runs the week-7 course sketch only — no wheels test.
+  const pulaskiItems = ["course-challenge"]
+    .map((id) => items.find((s) => s.id === id))
+    .filter((s): s is (typeof items)[number] => s !== undefined);
 
   return (
     <>
@@ -38,6 +43,8 @@ export default async function Home() {
         done={done}
         currentWeek={currentWeek}
         diagrams={diagrams}
+        pulaskiItems={pulaskiItems}
+        pulaskiDiagrams={pulaskiDiagrams}
       />
     </>
   );

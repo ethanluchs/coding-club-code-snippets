@@ -11,9 +11,13 @@ type Item = Snippet & { html: string };
 const ROW_ONE = [1, 2, 3, 4, 5, 6];
 const ROW_TWO = [7, 8, 9, 10];
 
-/** Not a week — the wiring tab rides in the same nav. */
+/** Not weeks — these tabs ride in the same nav. */
 const WIRING = -1;
 const WIRING_COLOR = "#4a5056";
+
+/** One-off 3-hour session: its own code and its own diagrams. */
+const PULASKI = -2;
+const PULASKI_COLOR = "#8e44ad";
 
 const GREY = "#9aa0a6";
 
@@ -34,6 +38,8 @@ export default function SnippetList({
   done,
   currentWeek,
   diagrams,
+  pulaskiItems,
+  pulaskiDiagrams,
 }: {
   items: Item[];
   weekColors: Record<number, string>;
@@ -41,14 +47,23 @@ export default function SnippetList({
   done: number[];
   currentWeek: number;
   diagrams: WiringDiagram[];
+  pulaskiItems: Item[];
+  pulaskiDiagrams: WiringDiagram[];
 }) {
   const [week, setWeek] = useState<number>(currentWeek);
   const shown = items.filter((s) => s.week === week);
   const soon = comingSoon.includes(week);
   const isDone = done.includes(week);
   const onWiring = week === WIRING;
+  const onPulaski = week === PULASKI;
   // A finished week reads in grey; the current week keeps its colour.
-  const color = onWiring ? WIRING_COLOR : isDone ? GREY : weekColors[week];
+  const color = onWiring
+    ? WIRING_COLOR
+    : onPulaski
+      ? PULASKI_COLOR
+      : isDone
+        ? GREY
+        : weekColors[week];
 
   const tab = (n: number) => {
     const active = n === week;
@@ -111,11 +126,30 @@ export default function SnippetList({
           >
             Wiring
           </button>
+          <button
+            type="button"
+            onClick={() => setWeek(PULASKI)}
+            aria-pressed={onPulaski}
+            style={{
+              background: onPulaski ? PULASKI_COLOR : "transparent",
+              color: onPulaski ? "#fff" : PULASKI_COLOR,
+              boxShadow: `inset 0 0 0 3px ${PULASKI_COLOR}`,
+            }}
+            className="h-12 flex-[2] rounded-xl text-base font-extrabold transition-transform active:scale-95"
+          >
+            Pulaski
+          </button>
         </div>
       </nav>
 
       {onWiring ? (
         <Wiring diagrams={diagrams} color={WIRING_COLOR} />
+      ) : onPulaski ? (
+        <Pulaski
+          items={pulaskiItems}
+          diagrams={pulaskiDiagrams}
+          color={PULASKI_COLOR}
+        />
       ) : soon ? (
         <ComingSoon week={week} color={weekColors[week]} />
       ) : (
@@ -150,6 +184,68 @@ export default function SnippetList({
           </div>
         </>
       )}
+    </>
+  );
+}
+
+/**
+ * The Pulaski one-off: the code first (the deck tells kids to copy "the
+ * second block"), then the three wiring diagrams underneath.
+ */
+function Pulaski({
+  items,
+  diagrams,
+  color,
+}: {
+  items: Item[];
+  diagrams: WiringDiagram[];
+  color: string;
+}) {
+  return (
+    <>
+      <p className="mt-3 mb-5 text-[15px] text-muted">
+        One-off session. No distance sensor and no servo on these cars — just
+        the motors.
+      </p>
+
+      <h2
+        className="mb-1 text-2xl font-extrabold tracking-tight"
+        style={{ color }}
+      >
+        Wiring
+      </h2>
+      <Wiring diagrams={diagrams} color={color} />
+
+      <h2
+        className="mt-10 mb-3 text-2xl font-extrabold tracking-tight"
+        style={{ color }}
+      >
+        The code
+      </h2>
+
+      <div className="flex flex-col gap-8">
+        {items.map((s) => (
+          <section key={s.id}>
+            <div className="mb-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <h3
+                className="text-xl font-extrabold tracking-tight"
+                style={{ color }}
+              >
+                {s.title}
+              </h3>
+              {s.pins && (
+                <span
+                  className="rounded-full px-2.5 py-1 font-mono text-xs font-bold"
+                  style={{ background: `${color}22`, color }}
+                >
+                  {s.pins}
+                </span>
+              )}
+            </div>
+            <CodeSurface code={s.code} html={s.html} accent={color} />
+          </section>
+        ))}
+      </div>
     </>
   );
 }

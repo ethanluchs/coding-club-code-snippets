@@ -536,6 +536,30 @@ All other code-bearing pages (12, 16, 20, 21, 23, 28, 29, 34, 35, 36, 39, 40,
 
 ---
 
+## Pulaski — one-off session
+
+A separate 3-hour session with its own tab. No distance sensor, no servo —
+motors only. It reuses the week-7 `course-challenge` snippet verbatim,
+because the pin map is identical. The wheels test is not shown here.
+
+The shared sketch still declares a servo and the trig/echo pins. That is
+deliberate (confirmed 2026-11-09): with no servo or sensor attached those
+lines simply do nothing, and keeping one sketch means one thing to maintain.
+
+The tab shows the wiring diagrams **above** the code.
+
+Its three wiring diagrams live in `public/pulaski/` and are defined as
+`pulaskiDiagrams` in `content/wiring.ts`. They differ from the kids-club set
+in one way: **no breadboard.** The driver's 5V goes straight to the Arduino's
+5V, where the kids-club car routes it through a breadboard rail that also
+feeds the sensor.
+
+Verified against the session deck's diagrams: motors (both blacks to OUT4 and
+OUT1, both reds to OUT3 and OUT2), driver (ENA 11, IN1 10, IN2 9, IN3 7,
+IN4 6, ENB 5) and power as above.
+
+---
+
 ## Weeks 8-10 — not yet written
 
 Weeks 8, 9 and 10 ("Make your own", "Make it decide", "The maze" in the
