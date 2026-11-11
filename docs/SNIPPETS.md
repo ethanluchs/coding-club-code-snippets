@@ -565,10 +565,27 @@ IN4 6, ENB 5) and power as above.
 
 ---
 
-## Weeks 8-10 — not yet written
+## Week 8 — Make Your Own
 
-Weeks 8, 9 and 10 ("Make your own", "Make it decide", "The maze" in the
-programming deck) have no snippet yet. They are listed in `comingSoon` in
+### 8.1 Make It Move  (`make-it-move-w8`)
+
+**The same sketch body as 7.2, byte for byte.** Only the header comment
+differs: week 8's lists `look_ahead()` under "NEW THIS WEEK", week 7's does
+not mention it at all, so a kid looking back at week 7 does not see a command
+that had not been taught yet.
+
+Both bodies define `look_ahead()` and `print()`. If you edit one body, edit
+the other — the split is deliberate but unenforced.
+
+Week 2 of the programming deck (slides 22 and 24) teaches return values with
+`print(look_ahead());`, which is why the helper exists.
+
+---
+
+## Weeks 9-10 — not yet written
+
+Weeks 9 and 10 ("Make it decide", "The maze" in the programming deck) have no
+snippet yet. They are listed in `comingSoon` in
 `content/snippets.ts`, which makes the site render a "Coming soon" panel for
 those tabs. Remove a week from that array once its snippet exists.
 
