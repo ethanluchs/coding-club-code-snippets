@@ -15,9 +15,11 @@ const ROW_TWO = [7, 8, 9, 10];
 const WIRING = -1;
 const WIRING_COLOR = "#4a5056";
 
-/** One-off 3-hour session: its own code and its own diagrams. */
+/** One-off 3-hour session: its own code and its own diagrams.
+ *  Already run, so it reads grey like a finished week. */
 const PULASKI = -2;
-const PULASKI_COLOR = "#8e44ad";
+const PULASKI_COLOR = "#9aa0a6";
+const PULASKI_DONE = true;
 
 const GREY = "#9aa0a6";
 
@@ -135,9 +137,18 @@ export default function SnippetList({
               color: onPulaski ? "#fff" : PULASKI_COLOR,
               boxShadow: `inset 0 0 0 3px ${PULASKI_COLOR}`,
             }}
-            className="h-12 flex-[2] rounded-xl text-base font-extrabold transition-transform active:scale-95"
+            className="relative h-12 flex-[2] rounded-xl text-base font-extrabold transition-transform active:scale-95"
           >
             Pulaski
+            {PULASKI_DONE && (
+              <span
+                aria-hidden="true"
+                className="absolute top-1 right-1.5 text-[11px] leading-none font-black"
+                style={{ color: onPulaski ? "#fff" : PULASKI_COLOR }}
+              >
+                ✓
+              </span>
+            )}
           </button>
         </div>
       </nav>

@@ -520,8 +520,14 @@ All other code-bearing pages (12, 16, 20, 21, 23, 28, 29, 34, 35, 36, 39, 40,
   directly. Everything below a "DO NOT CHANGE" banner implements those
   commands. This is the abstraction the programming deck is built around
   (deck p.6: "all of this BECAME this").
-- note: Three commands only — no `go_backward`, `go_until_wall` or `wait`.
-  Those belong to later weeks.
+- note: Four commands: `go_forward`, `turn_left`, `turn_right` and
+  `look_ahead`. No `go_backward`, `go_until_wall` or `wait`.
+- note: **`look_ahead()` added 2026-11-11** for week 2 of the programming
+  deck (slides 22 and 24), which teaches return values. It returns an `int`
+  in cm, or 400 when `pulseIn` times out, so a missing echo reads as "far
+  away" rather than "wall right here".
+- note: A `print(int)` helper wraps `Serial.println` so the deck's
+  `print(look_ahead());` works verbatim when a kid types it.
 - note: `runCourse()` ships **empty** — just a `// your code goes here`
   comment. Kids write the path themselves (deck p.9 one metre, p.10 square).
 - note: `MS_PER_CM` (25) and `MS_PER_DEGREE` (6) sit in an editable
@@ -530,9 +536,8 @@ All other code-bearing pages (12, 16, 20, 21, 23, 28, 29, 34, 35, 36, 39, 40,
   (deck p.9, p.10). `leftSpeed` / `rightSpeed` (180) fix a car that pulls.
 - note: The course runs once from `setup()` after a 5-second placement delay;
   `loop()` is deliberately empty. Re-run with the Arduino RESET button.
-- note: Trig and Echo are declared and set up but unused — this week's three
-  commands do not read the sensor. The servo still centres at 90 degrees so
-  the sensor points forward for later weeks.
+- note: The servo centres at 90 degrees in `setup()`, so the sensor points
+  forward before any `look_ahead()` call.
 
 ---
 

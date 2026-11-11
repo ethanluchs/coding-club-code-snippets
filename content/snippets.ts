@@ -24,9 +24,10 @@ export const weekColors: Record<number, string> = {
 export const comingSoon: number[] = [8, 9, 10];
 
 /** Weeks already taught. Still readable, just dimmed and ticked. */
-export const done: number[] = [1, 2, 3, 4, 5, 6];
+export const done: number[] = [1, 2, 3, 4, 5, 6, 7];
 
-/** The week the tabs open on. */
+/** The week the tabs open on. Week 2 of the programming course works
+ *  out of the week-7 sketch, so that is still the tab to land on. */
 export const currentWeek = 7;
 
 export const snippets: Snippet[] = [
@@ -502,7 +503,7 @@ void stopCar() {
     id: "course-challenge",
     title: "Make It Move",
     week: 7,
-    pins: `servo ${SC} · ENA ${M.ena} · IN1 ${M.in1} · IN2 ${M.in2} · IN3 ${M.in3} · IN4 ${M.in4} · ENB ${M.enb}`,
+    pins: `servo ${SC} · Trig ${U.trig} · Echo ${U.echo} · ENA ${M.ena} · IN1 ${M.in1} · IN2 ${M.in2} · IN3 ${M.in3} · IN4 ${M.in4} · ENB ${M.enb}`,
     code: `/* ============================================================
    THE ROBOT CAR  —  WEEK 7
 
@@ -511,6 +512,12 @@ void stopCar() {
      go_forward(50);     drive forward about 50 cm
      turn_left(90);      turn left about 90 degrees
      turn_right(90);     turn right about 90 degrees
+
+     look_ahead();       how far away is the nearest thing,
+                         in cm. This one hands a number BACK
+                         to you, so you can print it:
+
+                           print(look_ahead());
 
    The numbers are a request, not a promise. Your car is not
    exactly like anyone else's, so you will have to change them
@@ -661,6 +668,32 @@ void turn_right(int degrees) {
   delay((unsigned long)degrees * MS_PER_DEGREE);
   stopCar();
   delay(SETTLE_MS);
+}
+
+
+// ---------- the sensor ----------
+
+//  Sends out a little chirp of sound, then times how long the
+//  echo takes to come back. Hands that back to you, in cm.
+int look_ahead() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, 30000);
+
+  if (duration == 0) {
+    return 400;              // heard nothing - treat it as far away
+  }
+
+  return duration * 0.0343 / 2;
+}
+
+//  Prints a number to the Serial Monitor, on its own line.
+void print(int number) {
+  Serial.println(number);
 }
 
 
