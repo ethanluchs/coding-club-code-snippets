@@ -21,13 +21,13 @@ export const weekColors: Record<number, string> = {
 };
 
 /** Weeks 8-10 have no code yet. */
-export const comingSoon: number[] = [9, 10];
+export const comingSoon: number[] = [10];
 
 /** Weeks already taught. Still readable, just dimmed and ticked. */
-export const done: number[] = [1, 2, 3, 4, 5, 6, 7];
+export const done: number[] = [1, 2, 3, 4, 5, 6, 7, 8];
 
 /** The week the tabs open on. */
-export const currentWeek = 8;
+export const currentWeek = 9;
 
 export const snippets: Snippet[] = [
   // ---------- Week 1 ----------
@@ -939,6 +939,315 @@ void motorsForward() {
   digitalWrite(in2, LOW);
   digitalWrite(in3, HIGH);
   digitalWrite(in4, LOW);
+  analogWrite(ena, leftSpeed);
+  analogWrite(enb, rightSpeed);
+}
+
+void motorsSpinLeft() {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(ena, leftSpeed);
+  analogWrite(enb, rightSpeed);
+}
+
+void motorsSpinRight() {
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
+  analogWrite(ena, leftSpeed);
+  analogWrite(enb, rightSpeed);
+}
+
+void stopCar() {
+  analogWrite(ena, 0);
+  analogWrite(enb, 0);
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, LOW);
+}`,
+  },
+
+  // ---------- Week 9 ----------
+  {
+    id: "make-it-decide-w9",
+    title: "Make It Decide",
+    week: 9,
+    pins: `servo ${SC} · Trig ${U.trig} · Echo ${U.echo} · ENA ${M.ena} · IN1 ${M.in1} · IN2 ${M.in2} · IN3 ${M.in3} · IN4 ${M.in4} · ENB ${M.enb}`,
+    code: `/* ============================================================
+   THE ROBOT CAR  —  WEEK 9
+
+   YOUR COMMANDS:
+
+     go_forward(50);     drive forward about 50 cm
+     go_backward(20);    drive backward about 20 cm
+     turn_left(90);      turn left about 90 degrees
+     turn_right(90);     turn right about 90 degrees
+     stop_here();        stop and stay stopped
+
+     look_ahead();       how far away is the nearest thing,
+                         in cm. Hands a number BACK to you:
+
+                           print(look_ahead());
+
+   NEW THIS WEEK — while:
+
+     A while loop keeps doing something AS LONG AS
+     something is true. It checks BEFORE every go.
+
+       while (look_ahead() > WALL) {
+         go_forward(STEP);
+       }
+
+     Read it out loud: "while there is nothing within
+     WALL centimetres, keep nudging forward."
+
+     When the wall gets close, the test stops being
+     true, and the car stops.
+
+   NEW THIS WEEK — if / else if / else:
+
+       if      (look_ahead() < 15) { go_backward(STEP); }
+       else if (look_ahead() > 25) { go_forward(STEP);  }
+       else                        { stop_here();       }
+
+     It checks them in order and runs the FIRST one
+     that is true. Only one of the three ever runs.
+
+   HOW TO RUN IT:
+
+     1. Upload your code
+     2. You have 5 seconds to put the car on the start line
+     3. Watch it go
+     4. Press the RESET button on the Arduino to run it again
+
+   ============================================================ */
+
+// ============================================================
+//  1.  YOUR COURSE          <-- YOU TYPE HERE
+// ============================================================
+
+void runCourse() {
+
+  // your code goes here
+
+}
+
+// ============================================================
+//  END OF YOUR COURSE
+// ============================================================
+
+
+// ============================================================
+//  2.  YOUR OWN COMMANDS    <-- YOU WRITE THESE
+//
+//  A command of your own goes here, below runCourse().
+//  Not inside it!
+// ============================================================
+
+//  Drives forward until there is a wall in front of it.
+//  It does not care how far away the wall is.
+void drive_to_wall() {
+
+  // your code goes here
+
+}
+
+// ============================================================
+
+
+// ============================================================
+//  3.  YOUR CAR'S NUMBERS   <-- only when you calibrate
+// ============================================================
+
+//  Found in the ONE METER challenge.
+//  Car goes too far?   make this number SMALLER.
+//  Car stops short?    make this number BIGGER.
+int MS_PER_CM = 25;
+
+//  Found in the SQUARE challenge.
+//  Car turns too far?  make this number SMALLER.
+//  Not far enough?     make this number BIGGER.
+int MS_PER_DEGREE = 6;
+
+//  How close is "a wall"? Print look_ahead() in a corridor
+//  and pick a number between the wall and the opening.
+int WALL = 20;
+
+//  How big is one nudge, in cm?
+//  Too small and the car creeps. Too big and it bumps.
+int STEP = 5;
+
+//  Only if your car will not drive straight.
+//  Pulling LEFT?   make leftSpeed bigger.
+//  Pulling RIGHT?  make rightSpeed bigger.
+//  Biggest number allowed is 255.
+int leftSpeed  = 180;
+int rightSpeed = 180;
+
+// ============================================================
+
+/* ============================================================
+
+   ,-----------------------------------------------------.
+   |                                                     |
+   |    DO NOT CHANGE ANYTHING BELOW THIS LINE           |
+   |                                                     |
+   |    This is the part that makes your commands work.  |
+   |                                                     |
+   \`-----------------------------------------------------'
+
+   ============================================================ */
+
+#include <Servo.h>
+Servo myServo;
+
+const int servoPin = ${SC};
+const int trigPin  = ${U.trig};
+const int echoPin  = ${U.echo};
+
+const int ena = ${M.ena};   // one side, speed
+const int in1 = ${M.in1};   // one side
+const int in2 = ${M.in2};    // one side
+const int in3 = ${M.in3};    // other side
+const int in4 = ${M.in4};    // other side
+const int enb = ${M.enb};    // other side, speed
+
+const int SETTLE_MS = 150;   // tiny pause between moves
+
+
+void setup() {
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+  pinMode(ena, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+  pinMode(in3, OUTPUT);
+  pinMode(in4, OUTPUT);
+  pinMode(enb, OUTPUT);
+
+  Serial.begin(9600);
+
+  myServo.attach(servoPin);
+  myServo.write(90);          // point the sensor straight ahead
+  delay(500);
+
+  stopCar();
+
+  Serial.println("Put the car on the start line!");
+  delay(5000);
+
+  Serial.println("Go.");
+  runCourse();
+
+  stopCar();
+  Serial.println("Done. Press RESET to run again.");
+}
+
+
+void loop() {
+  // nothing here - your course runs one time, in setup()
+}
+
+
+// ---------- the commands ----------
+
+void go_forward(int cm) {
+  Serial.print("forward ");
+  Serial.print(cm);
+  Serial.println(" cm");
+
+  motorsForward();
+  delay((unsigned long)cm * MS_PER_CM);
+  stopCar();
+  delay(SETTLE_MS);
+}
+
+void go_backward(int cm) {
+  Serial.print("backward ");
+  Serial.print(cm);
+  Serial.println(" cm");
+
+  motorsBackward();
+  delay((unsigned long)cm * MS_PER_CM);
+  stopCar();
+  delay(SETTLE_MS);
+}
+
+void turn_left(int degrees) {
+  Serial.print("left ");
+  Serial.print(degrees);
+  Serial.println(" degrees");
+
+  motorsSpinLeft();
+  delay((unsigned long)degrees * MS_PER_DEGREE);
+  stopCar();
+  delay(SETTLE_MS);
+}
+
+void turn_right(int degrees) {
+  Serial.print("right ");
+  Serial.print(degrees);
+  Serial.println(" degrees");
+
+  motorsSpinRight();
+  delay((unsigned long)degrees * MS_PER_DEGREE);
+  stopCar();
+  delay(SETTLE_MS);
+}
+
+//  Stops, and stays stopped for a moment.
+void stop_here() {
+  stopCar();
+  delay(SETTLE_MS);
+}
+
+
+// ---------- the sensor ----------
+
+//  Sends out a little chirp of sound, then times how long the
+//  echo takes to come back. Hands that back to you, in cm.
+int look_ahead() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, 30000);
+
+  if (duration == 0) {
+    return 400;              // heard nothing - treat it as far away
+  }
+
+  return duration * 0.0343 / 2;
+}
+
+//  Prints a number to the Serial Monitor, on its own line.
+void print(int number) {
+  Serial.println(number);
+}
+
+
+// ---------- motor control ----------
+
+void motorsForward() {
+  digitalWrite(in1, HIGH);
+  digitalWrite(in2, LOW);
+  digitalWrite(in3, HIGH);
+  digitalWrite(in4, LOW);
+  analogWrite(ena, leftSpeed);
+  analogWrite(enb, rightSpeed);
+}
+
+void motorsBackward() {
+  digitalWrite(in1, LOW);
+  digitalWrite(in2, HIGH);
+  digitalWrite(in3, LOW);
+  digitalWrite(in4, HIGH);
   analogWrite(ena, leftSpeed);
   analogWrite(enb, rightSpeed);
 }

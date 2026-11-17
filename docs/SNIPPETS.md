@@ -582,10 +582,52 @@ Week 2 of the programming deck (slides 22 and 24) teaches return values with
 
 ---
 
-## Weeks 9-10 — not yet written
+## Week 9 — Make It Decide
 
-Weeks 9 and 10 ("Make it decide", "The maze" in the programming deck) have no
-snippet yet. They are listed in `comingSoon` in
+### 9.1 Make It Decide  (`make-it-decide-w9`)
+
+Teaches **`while`** and **`if / else if / else`**. Written for a course whose
+*turn sequence* is given but whose *corridor lengths* change between runs —
+the sensor is forward-facing only, so the car cannot know whether left is
+open, but it can always tell how far the next wall is.
+
+The intended programs:
+
+```cpp
+void drive_to_wall() {
+  while (look_ahead() > WALL) { go_forward(STEP); }
+}
+```
+
+then `drive_to_wall(); turn_right(TURN); drive_to_wall(); ...`
+
+and the hand-follower finale:
+
+```cpp
+while (true) {
+  if      (look_ahead() < 15) { go_backward(STEP); }
+  else if (look_ahead() > 25) { go_forward(STEP);  }
+  else                        { stop_here();       }
+}
+```
+
+Decisions:
+
+- **Real `while`, not a `repeat_until` wrapper.** Transferable, and
+  `while (look_ahead() > WALL)` reads correctly out loud.
+- **Three editable sections**: `runCourse()`, a `drive_to_wall()` stub the
+  kids fill in, and the tuning numbers. Both code sections ship empty.
+- **New helpers** over week 8: `go_backward(int cm)` and `stop_here()`. The
+  hand-follower needs both.
+- **New tuning constants**: `WALL` (20) and `STEP` (5).
+- A `while (true)` inside `runCourse()` never returns, so the "Done." line
+  never prints. That is correct — the car just keeps following until RESET.
+
+---
+
+## Week 10 — not yet written
+
+Week 10 ("The maze" in the programming deck) has no snippet yet. They are listed in `comingSoon` in
 `content/snippets.ts`, which makes the site render a "Coming soon" panel for
 those tabs. Remove a week from that array once its snippet exists.
 
