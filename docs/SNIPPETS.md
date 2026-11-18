@@ -647,9 +647,12 @@ Decisions:
   `stop_here()` already did. `look_ahead()` deliberately does **not** — a
   sensor read should not have a hidden side effect on the motors.
 - **New tuning constants**: `distance_to_wall` (20) and `STEP` (5).
-  `distance_to_wall` sits in section 2, directly above the `drive_to_wall()`
-  stub rather than down in the numbers block — it is the one number this
-  week's exercise turns on, so it needs to be where they are already looking.
+  Both sit in section 2, directly above the `drive_to_wall()` stub rather
+  than down in the numbers block. Two reasons: they are the numbers this
+  week's exercise turns on, and — more importantly — **C++ requires a global
+  to be declared before the function that uses it.** With `STEP` left in
+  section 3 the intended solution fails to compile with
+  `'STEP' was not declared in this scope`. Verified with a compiler.
 - A `while (true)` inside `runCourse()` never returns, so the "Done." line
   never prints. That is correct — the car just keeps following until RESET.
 

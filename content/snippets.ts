@@ -1056,6 +1056,11 @@ void runCourse() {
 //  Car stops way too early?   make this number SMALLER.
 int distance_to_wall = 20;
 
+//  How big is one nudge, in cm? This is how far the car
+//  travels between each look.
+//  Too small and the car creeps. Too big and it overshoots.
+int STEP = 5;
+
 //  Drives forward until there is a wall in front of it.
 //  It does not care how far away the wall is.
 void drive_to_wall() {
@@ -1080,10 +1085,6 @@ int MS_PER_CM = 25;
 //  Car turns too far?  make this number SMALLER.
 //  Not far enough?     make this number BIGGER.
 int MS_PER_DEGREE = 6;
-
-//  How big is one nudge, in cm?
-//  Too small and the car creeps. Too big and it bumps.
-int STEP = 5;
 
 //  Only if your car will not drive straight.
 //  Pulling LEFT?   make leftSpeed bigger.
