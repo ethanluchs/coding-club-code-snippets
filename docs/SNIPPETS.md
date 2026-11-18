@@ -611,6 +611,22 @@ while (true) {
 }
 ```
 
+Lesson shape (confirmed 2026-11-18):
+
+1. Implement `drive_to_wall()` with a `while` loop.
+2. Drive a course whose turn sequence you give them but whose corridor
+   lengths change between runs. Same code, still works — that is the moment.
+3. Hand-follower if there is time.
+
+**No calibration step first.** Kids discover `WALL` by watching the car drive
+into the wall, which teaches the `while` condition better than picking a
+number up front. The `WALL` comment therefore names symptoms rather than
+telling them to print readings.
+
+Not a maze solver: the sensor only looks forward, so the car cannot discover
+*which way* to turn — only *how far*. Worth framing as "the course that
+changes size" rather than promising a maze.
+
 Decisions:
 
 - **Real `while`, not a `repeat_until` wrapper.** Transferable, and

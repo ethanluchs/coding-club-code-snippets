@@ -1073,8 +1073,9 @@ int MS_PER_CM = 25;
 //  Not far enough?     make this number BIGGER.
 int MS_PER_DEGREE = 6;
 
-//  How close is "a wall"? Print look_ahead() in a corridor
-//  and pick a number between the wall and the opening.
+//  How close is "a wall"?
+//  Car drives INTO the wall?  make this number BIGGER.
+//  Car stops way too early?   make this number SMALLER.
 int WALL = 20;
 
 //  How big is one nudge, in cm?
