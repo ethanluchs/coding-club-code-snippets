@@ -998,12 +998,13 @@ void stopCar() {
      A while loop keeps doing something AS LONG AS
      something is true. It checks BEFORE every go.
 
-       while (look_ahead() > WALL) {
+       while (look_ahead() > distance_to_wall) {
          go_forward(STEP);
        }
 
      Read it out loud: "while there is nothing within
-     WALL centimetres, keep nudging forward."
+     distance_to_wall centimetres, keep nudging
+     forward."
 
      When the wall gets close, the test stops being
      true, and the car stops.
@@ -1048,6 +1049,11 @@ void runCourse() {
 //  Not inside it!
 // ============================================================
 
+//  How close does the car get before it calls it a wall, in cm?
+//  Car drives INTO the wall?  make this number BIGGER.
+//  Car stops way too early?   make this number SMALLER.
+int distance_to_wall = 20;
+
 //  Drives forward until there is a wall in front of it.
 //  It does not care how far away the wall is.
 void drive_to_wall() {
@@ -1072,11 +1078,6 @@ int MS_PER_CM = 25;
 //  Car turns too far?  make this number SMALLER.
 //  Not far enough?     make this number BIGGER.
 int MS_PER_DEGREE = 6;
-
-//  How close is "a wall"?
-//  Car drives INTO the wall?  make this number BIGGER.
-//  Car stops way too early?   make this number SMALLER.
-int WALL = 20;
 
 //  How big is one nudge, in cm?
 //  Too small and the car creeps. Too big and it bumps.

@@ -595,7 +595,7 @@ The intended programs:
 
 ```cpp
 void drive_to_wall() {
-  while (look_ahead() > WALL) { go_forward(STEP); }
+  while (look_ahead() > distance_to_wall) { go_forward(STEP); }
 }
 ```
 
@@ -620,8 +620,8 @@ Lesson shape (confirmed 2026-11-18):
 
 **No calibration step first.** Kids discover `WALL` by watching the car drive
 into the wall, which teaches the `while` condition better than picking a
-number up front. The `WALL` comment therefore names symptoms rather than
-telling them to print readings.
+number up front. The `distance_to_wall` comment therefore names symptoms
+rather than telling them to print readings.
 
 Not a maze solver: the sensor only looks forward, so the car cannot discover
 *which way* to turn — only *how far*. Worth framing as "the course that
@@ -635,7 +635,10 @@ Decisions:
   kids fill in, and the tuning numbers. Both code sections ship empty.
 - **New helpers** over week 8: `go_backward(int cm)` and `stop_here()`. The
   hand-follower needs both.
-- **New tuning constants**: `WALL` (20) and `STEP` (5).
+- **New tuning constants**: `distance_to_wall` (20) and `STEP` (5).
+  `distance_to_wall` sits in section 2, directly above the `drive_to_wall()`
+  stub rather than down in the numbers block — it is the one number this
+  week's exercise turns on, so it needs to be where they are already looking.
 - A `while (true)` inside `runCourse()` never returns, so the "Done." line
   never prints. That is correct — the car just keeps following until RESET.
 
