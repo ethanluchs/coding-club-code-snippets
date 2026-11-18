@@ -1177,6 +1177,9 @@ void go_forward(int cm) {
 //  just keeps them running, so the car glides instead of
 //  limping. Any other command stops them first.
 void step_forward(int cm) {
+  Serial.print("nudge ");
+  Serial.println(cm);
+
   motorsForward();
   delay((unsigned long)cm * MS_PER_CM);
 }
@@ -1237,11 +1240,16 @@ int look_ahead() {
 
   long duration = pulseIn(echoPin, HIGH, 30000);
 
-  if (duration == 0) {
-    return 400;              // heard nothing - treat it as far away
+  int cm = 400;              // heard nothing - treat it as far away
+  if (duration > 0) {
+    cm = duration * 0.0343 / 2;
   }
 
-  return duration * 0.0343 / 2;
+  Serial.print("  I see ");
+  Serial.print(cm);
+  Serial.println(" cm");
+
+  return cm;
 }
 
 //  Prints a number to the Serial Monitor, on its own line.
