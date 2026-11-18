@@ -984,6 +984,8 @@ void stopCar() {
 
      go_forward(50);     drive forward about 50 cm
      go_backward(20);    drive backward about 20 cm
+     step_forward(5);    nudge forward about 5 cm, without
+                         stopping - use this inside a loop
      turn_left(90);      turn left about 90 degrees
      turn_right(90);     turn right about 90 degrees
      stop_here();        stop and stay stopped
@@ -999,7 +1001,7 @@ void stopCar() {
      something is true. It checks BEFORE every go.
 
        while (look_ahead() > distance_to_wall) {
-         go_forward(STEP);
+         step_forward(STEP);
        }
 
      Read it out loud: "while there is nothing within
@@ -1011,9 +1013,9 @@ void stopCar() {
 
    NEW THIS WEEK — if / else if / else:
 
-       if      (look_ahead() < 15) { go_backward(STEP); }
-       else if (look_ahead() > 25) { go_forward(STEP);  }
-       else                        { stop_here();       }
+       if      (look_ahead() < 15) { go_backward(STEP);  }
+       else if (look_ahead() > 25) { step_forward(STEP); }
+       else                        { stop_here();        }
 
      It checks them in order and runs the FIRST one
      that is true. Only one of the three ever runs.
@@ -1158,6 +1160,7 @@ void loop() {
 // ---------- the commands ----------
 
 void go_forward(int cm) {
+  stopCar();              // in case a loop left us gliding
   Serial.print("forward ");
   Serial.print(cm);
   Serial.println(" cm");
@@ -1168,7 +1171,17 @@ void go_forward(int cm) {
   delay(SETTLE_MS);
 }
 
+//  A nudge, for use inside a loop.
+//  It does NOT stop the motors at the end - the next nudge
+//  just keeps them running, so the car glides instead of
+//  limping. Any other command stops them first.
+void step_forward(int cm) {
+  motorsForward();
+  delay((unsigned long)cm * MS_PER_CM);
+}
+
 void go_backward(int cm) {
+  stopCar();              // in case a loop left us gliding
   Serial.print("backward ");
   Serial.print(cm);
   Serial.println(" cm");
@@ -1180,6 +1193,7 @@ void go_backward(int cm) {
 }
 
 void turn_left(int degrees) {
+  stopCar();              // in case a loop left us gliding
   Serial.print("left ");
   Serial.print(degrees);
   Serial.println(" degrees");
@@ -1191,6 +1205,7 @@ void turn_left(int degrees) {
 }
 
 void turn_right(int degrees) {
+  stopCar();              // in case a loop left us gliding
   Serial.print("right ");
   Serial.print(degrees);
   Serial.println(" degrees");

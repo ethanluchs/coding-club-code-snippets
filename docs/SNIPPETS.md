@@ -595,7 +595,7 @@ The intended programs:
 
 ```cpp
 void drive_to_wall() {
-  while (look_ahead() > distance_to_wall) { go_forward(STEP); }
+  while (look_ahead() > distance_to_wall) { step_forward(STEP); }
 }
 ```
 
@@ -633,8 +633,19 @@ Decisions:
   `while (look_ahead() > WALL)` reads correctly out loud.
 - **Three editable sections**: `runCourse()`, a `drive_to_wall()` stub the
   kids fill in, and the tuning numbers. Both code sections ship empty.
-- **New helpers** over week 8: `go_backward(int cm)` and `stop_here()`. The
-  hand-follower needs both.
+- **New helpers** over week 8: `step_forward(int cm)`, `go_backward(int cm)`
+  and `stop_here()`.
+- **`step_forward()` deliberately leaves the motors running.** `go_forward()`
+  stops and pauses `SETTLE_MS` after every call, which inside a tight loop
+  made the car limp — 286ms per iteration with the motors on only 44% of the
+  time. `step_forward()` skips both, so the loop runs at 128ms per iteration
+  with the motors on continuously and the car glides.
+  The student-facing code is identical either way; `STEP` still honestly
+  means "how far between sensor checks".
+- Because a loop can exit with the motors still running, `go_forward`,
+  `go_backward`, `turn_left` and `turn_right` each call `stopCar()` first.
+  `stop_here()` already did. `look_ahead()` deliberately does **not** — a
+  sensor read should not have a hidden side effect on the motors.
 - **New tuning constants**: `distance_to_wall` (20) and `STEP` (5).
   `distance_to_wall` sits in section 2, directly above the `drive_to_wall()`
   stub rather than down in the numbers block — it is the one number this
